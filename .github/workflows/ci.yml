@@ -75,6 +75,14 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Run Rake
+        env:
+          RAILS_ENV: test 
+        run: | 
+          cp .sample.env .env
+          bundle exec rake db:setup
+          bundle exec rake
+
       - name: Run tests
         env:
           RAILS_ENV: test
