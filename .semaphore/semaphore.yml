@@ -13,8 +13,8 @@ blocks:
             - checkout
             - sem-version ruby 3.3.4
             - sem-service start postgres 16
-            - sudo apt-get update
-            - sudo apt-get install libpq-dev
+            - '#sudo apt-get update'
+            - '#sudo apt-get install libpq-dev'
             - cache restore
             - bundle install --path vendor/bundle
             - cache store
