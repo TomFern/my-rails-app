@@ -19,5 +19,6 @@ blocks:
             - bundle install --path vendor/bundle
             - cache store
             - cp .sample.env .env
+            - 'bin/rails db:migrate'
             - 'bundle exec rake db:setup'
             - bundle exec rake
