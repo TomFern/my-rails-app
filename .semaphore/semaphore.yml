@@ -10,13 +10,17 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - checkout
+            - sudo apt-get update
+            - sudo apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3
             - sem-version ruby 3.3.4
-            - sem-service start postgres 16
+            - checkout
             - cache restore
             - bundle install --path vendor/bundle
             - cache store
             - cp .sample.env .env
-            - 'bin/rails db:migrate'
             - 'bundle exec rake db:setup'
             - bundle exec rake
+            - bin/brakeman --no-pager
+            - bin/importmap audit
+            - bin/rubocop -f github
+            - 'bin/rails db:test:prepare test test:system'
