@@ -1,0 +1,23 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2204
+blocks:
+  - name: 'Block #1'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - sem-version ruby 3.3.4
+            - sem-service start postgres 16.4
+            - sudo apt-get update
+            - sudo apt-get install libpq-dev
+            - cache restore
+            - bundle install --path vendor/bundle
+            - cache store
+            - cp .sample.env .env
+            - 'bundle exec rake db:setup'
+            - bundle exec rake
